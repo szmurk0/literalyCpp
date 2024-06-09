@@ -162,3 +162,23 @@ int main()
 
     return 0;
 }
+```
+
+## Użycie 
+
+Program pyta użytkownika o numer rzymski i liczbę arabską, a następnie konwertuje je odpowiednio:
+- Pobiera numer rzymski od użytkownika i wyświetla odpowiadającą liczbę arabską
+- Pobiera liczbę arabską od użytkownika i wyświetla odpowiadający numer rzymski
+
+
+## Przykład
+
+Wpisz numerał: X
+Arabski: 10
+
+Wpisz liczbę arabską: 50
+Rzymski: L
+
+### Autor: Oskar Szmurło 3P
+
+
