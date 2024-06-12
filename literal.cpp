@@ -1,34 +1,58 @@
 #include <iostream>
 #include <string>
-
 using namespace std;
+/*
+Nowe pojęcia, konstruktor(36l) this->(6l)
 
+this-> w skrócie odnosi się do bieżącego obiektu, w którym wywoływana jest dana metoda.
+    this->Pozwala odwoływać się do składowych klasy, aby odróżnić je od zmiennych lokalnych lub parametrów metody o tych samych nazwach.
+
+*/
+// Klasa reprezentująca numerał rzymski, który może być konwertowany na liczbę arabską i vice versa.
 class NumeralRzymski
 {
 public:
-    const static int M = 1000;
-    const static int D = 500;
-    const static int C = 100;
-    const static int L = 50;
-    const static int X = 10;
-    const static int V = 5;
-    const static int I = 1;
+    const static int M = 1000; ///< Wartość liczby rzymskiej M
+    const static int D = 500;  ///< Wartość liczby rzymskiej D
+    const static int C = 100;  ///< Wartość liczby rzymskiej C
+    const static int L = 50;   ///< Wartość liczby rzymskiej L
+    const static int X = 10;   ///< Wartość liczby rzymskiej X
+    const static int V = 5;    ///< Wartość liczby rzymskiej V
+    const static int I = 1;    ///< Wartość liczby rzymskiej I
 
+     // Konstruktor inicjalizujący numerał rzymski na podstawie liczby arabskiej.
+     // arabski Liczba arabska, na podstawie której tworzony jest numerał rzymski.
     NumeralRzymski(const int arabski) :
-            rzymski(""),
-            arabski((arabski > 0) ? arabski : 0)
+            rzymski(""), ///< Inicjalizacja numerału rzymskiego jako pusty ciąg znaków
+            arabski(arabski) ///< Inicjalizacja liczby arabskiej, jeśli jest większa niż 0
     {
-        konwertujNaRzymski();
+        if (arabski <= 0)
+        {
+            this->arabski = 0; ///< Ustawienie arabskiego na 0, jeśli przekazano wartość mniejszą lub równą 0
+        }
+        konwertujNaRzymski(); ///< Konwersja liczby arabskiej na numerał rzymski
     }
 
+
+    // Konstruktor inicjalizujący numerał rzymski na podstawie ciągu znaków.
+    // !NOWE! Konstruktor inicjuje dane składniowe obiektu, wywoływany podczas tworzenia jej instancji (klasy)
     NumeralRzymski(const string& str) :
-            rzymski((str.size() > 0) ? str : "0"),
-            arabski(0)
+            arabski(0) ///< Inicjalizacja liczby arabskiej na 0
     {
-        int i = 0;
-        while (i < static_cast<int>(str.size()))
+        if (str.size() > 0)
         {
-            char c = str[i++];
+            rzymski = str; ///< Ustawienie numerału rzymskiego na podstawie przekazanego ciągu znaków
+        }
+        else
+        {
+            rzymski = "0"; ///< Jeśli przekazany ciąg jest pusty, ustaw numerał rzymski na "0"
+        }
+
+        // Konwersja numerału rzymskiego na liczbę arabską
+        int i = 0;
+        while (i < static_cast<int>(rzymski.size()))
+        {
+            char c = rzymski[i++];
             switch (c)
             {
                 case 'M':
@@ -65,26 +89,44 @@ public:
         }
     }
 
+
+     // Metoda zwracająca liczbę arabską na podstawie numerału rzymskiego.
+
+     // Liczba arabska odpowiadająca numerałowi rzymskiemu.
+
     int pobierzArabski()
     {
-        return arabski;
+        return arabski; ///< Zwraca liczbę arabską odpowiadającą aktualnemu numerałowi rzymskiemu
     }
+
+
+    // Metoda ustawiająca liczbę arabską na podstawie podanej wartości.
 
     void ustawArabski(const int arabski)
     {
-        this->arabski = (arabski > 0) ? arabski : 0;
-        konwertujNaRzymski();
+        if (arabski > 0)
+        {
+            this->arabski = arabski; ///< Ustawia liczbę arabską na podstawie przekazanej wartości, jeśli jest większa niż 0
+        }
+        else
+        {
+            this->arabski = 0; ///< W przeciwnym razie ustawia liczbę arabską na 0
+        }
+        konwertujNaRzymski(); ///< Po zmianie liczby arabskiej konwertuje ją na numerał rzymski
     }
 
+    // Metoda zwracająca numerał rzymski jako ciąg znaków.
+    // Referencja do ciągu znaków zawierającego numerał rzymski.
     const string& pobierzRzymski()
     {
-        return rzymski;
+        return rzymski; ///< Zwraca numerał rzymski jako ciąg znaków
     }
 
 private:
+    // Prywatna metoda konwertująca liczbę arabską na numerał rzymski.
     void konwertujNaRzymski()
     {
-        rzymski = "";
+        rzymski = ""; ///< Resetuje numerał rzymski przed konwersją
         int liczba = arabski;
         while (liczba > 0)
         {
@@ -131,18 +173,19 @@ protected:
     int arabski;
 };
 
+
 int main()
 {
     string rzymski;
     cout << "Wpisz numerał: ";
     cin >> rzymski;
-    NumeralRzymski nr(rzymski);
+    NumeralRzymski nr(rzymski); ///< Tworzy obiekt NumeralRzymski na podstawie podanego numerału rzymskiego
     cout << "Arabski: " << nr.pobierzArabski() << endl;
 
     int arabski;
     cout << "Wpisz liczbę arabską: ";
     cin >> arabski;
-    nr.ustawArabski(arabski);
+    nr.ustawArabski(arabski); ///< Ustawia nową liczbę arabską dla istniejącego numerału rzymskiego
     cout << "Rzymski: " << nr.pobierzRzymski() << endl;
 
     return 0;
